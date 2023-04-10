@@ -1,4 +1,7 @@
 class ArticlesController < ApplicationController
+
+  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+  
   def index
     @articles = Article.all
   end
@@ -17,7 +20,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new, status: :unprocessible_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +34,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit, status: :unprocessible_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -45,6 +48,6 @@ class ArticlesController < ApplicationController
   # Keep malicious user from overwriting private data
   private
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :status)
     end
 end
