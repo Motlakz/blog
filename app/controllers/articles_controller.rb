@@ -1,9 +1,10 @@
 class ArticlesController < ApplicationController
-
   http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
   
   def index
     @articles = Article.all
+    flash[:notice] = "Article posted successfully"
+    flash[:alert] = "Failed to post article"
   end
 
   def show
